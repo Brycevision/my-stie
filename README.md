@@ -1,6 +1,6 @@
 # BryceVision — 此刻在场
 
-这是一个纯静态摄影集网站版本，可直接部署到 GitHub + Cloudflare Pages。
+纯静态摄影集网站版本。可直接上传到 GitHub，并通过 Cloudflare Pages 部署。
 
 ## 文件结构
 
@@ -9,37 +9,49 @@ index.html
 style.css
 script.js
 site-data.js
+.nojekyll
 assets/photos/*.webp
 ```
 
-## Cloudflare Pages 部署
+## 这一版更新
 
-1. 把本文件夹里的所有内容上传到 GitHub 仓库根目录。
-2. 在 Cloudflare Pages 里连接该 GitHub 仓库。
-3. 构建设置：
+- 图片展示从平铺改为每个 Chapter 的轮播式 Photo Deck。
+- 图片下方只显示单独小标题，不显示页码。
+- p25、p26、p27 已移除。
+- 保留原来的 BryceVision / 此刻在场 / 五个章节结构。
+
+## 部署到 Cloudflare Pages
+
+1. 把本文件夹内所有内容上传到 GitHub 仓库根目录。
+2. Cloudflare Pages 设置：
    - Framework preset: `None`
    - Build command: 留空
    - Output directory: `/` 或留空
-4. 部署后即可访问。
+3. 部署即可访问。
 
-## 替换为正式高清图片
+## 修改照片标题
 
-当前 `assets/photos/*.webp` 是从你上传的 PDF 里导出的网页预览图。正式版建议把原图压缩成 WebP 后放到 Cloudflare R2，再在 `site-data.js` 里把本地路径替换成图片 URL。
-
-例如：
+打开 `site-data.js`，找到对应图片：
 
 ```js
-"src": "https://images.yourdomain.com/cikezaichang/eaves/01.webp"
+{
+  "src": "assets/photos/p13.webp",
+  "caption": "父子望湖"
+}
 ```
 
-## 章节结构
+修改 `caption` 即可。
 
-- 檐下微光 / Under the Eaves
-- 人间片刻 / Human Moments
-- 城市低语 / The City Speaks Softly
-- 空椅之间 / Between Empty Chairs
-- 草木生灵 / Plants and Living Things
+## 之后换成 Cloudflare R2 图片链接
 
+把 `site-data.js` 里的：
 
-## Image titles
-每张图片的小标题写在 `site-data.js` 里的 `caption` 字段中。修改后刷新网站即可生效。
+```js
+"src": "assets/photos/p13.webp"
+```
+
+替换为：
+
+```js
+"src": "https://images.yourdomain.com/cikezaichang/human/01.webp"
+```

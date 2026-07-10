@@ -6,6 +6,10 @@ const firstChapter = data.chapters[0];
 hero.src = firstChapter.featureImage.src;
 hero.alt = firstChapter.featureImage.caption || firstChapter.title;
 
+function escapeAttr(value = '') {
+  return String(value).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 function chapterCard(ch) {
   return `
     <a class="chapter-card reveal" href="#${ch.id}">
@@ -15,33 +19,19 @@ function chapterCard(ch) {
         <p>${ch.en}<br>${ch.tag}</p>
       </div>
       <div class="chapter-card__thumb">
-        <img loading="lazy" src="${ch.featureImage.src}" alt="${ch.featureImage.caption || ch.title}">
+        <img loading="lazy" src="${ch.featureImage.src}" alt="${escapeAttr(ch.featureImage.caption || ch.title)}">
       </div>
     </a>`;
 }
 
-function photoClass(img, index) {
-  const ratio = img.w / img.h;
-  if (index === 0) return 'photo--large';
-  if (ratio > 1.35) return index % 4 === 0 ? 'photo--full' : 'photo--wide';
-  if (ratio < 0.8) return 'photo--portrait';
-  return index % 5 === 0 ? 'photo--small' : 'photo--wide';
-}
-
 function chapterSection(ch) {
-  const imgs = ch.images.map((img, i) => {
-    const cls = photoClass(img, i);
-    const pageLabel = `p.${String(img.page).padStart(2, '0')}`;
-    const caption = img.caption || `${ch.title} ${pageLabel}`;
-    return `
-      <figure class="photo ${cls} reveal" data-src="${img.src}" data-caption="${caption} / ${pageLabel}">
-        <img loading="lazy" src="${img.src}" alt="${caption}">
-        <figcaption>
-          <span>${caption}</span>
-          <span>${pageLabel}</span>
-        </figcaption>
-      </figure>`;
-  }).join('');
+  const first = ch.images[0];
+  const thumbs = ch.images.map((img, i) => `
+    <button class="deck-thumb${i === 0 ? ' is-active' : ''}" type="button" data-index="${i}" aria-label="Show ${escapeAttr(img.caption)}">
+      <img loading="lazy" src="${img.src}" alt="${escapeAttr(img.caption)}">
+    </button>`).join('');
+
+  const slidesData = encodeURIComponent(JSON.stringify(ch.images));
 
   return `
     <section class="chapter" id="${ch.id}">
@@ -53,7 +43,30 @@ function chapterSection(ch) {
         <p class="chapter__body">${ch.body}</p>
         <p class="chapter__en">${ch.enBody}</p>
       </aside>
-      <div class="gallery">${imgs}</div>
+
+      <div class="photo-deck reveal" data-chapter="${ch.id}" data-slides="${slidesData}">
+        <div class="deck-topline">
+          <span>${ch.num} / ${ch.title}</span>
+          <span class="deck-counter"><b>01</b> / ${String(ch.images.length).padStart(2, '0')}</span>
+        </div>
+
+        <div class="deck-stage" role="group" aria-label="${escapeAttr(ch.title)} image carousel">
+          <button class="deck-nav deck-nav--prev" type="button" aria-label="Previous image">←</button>
+          <figure class="deck-photo" data-src="${first.src}" data-caption="${escapeAttr(first.caption)}">
+            <div class="deck-photo__image-wrap">
+              <img class="deck-main-img" src="${first.src}" alt="${escapeAttr(first.caption)}">
+            </div>
+            <figcaption class="deck-caption">
+              <span class="deck-caption__title">${first.caption}</span>
+            </figcaption>
+          </figure>
+          <button class="deck-nav deck-nav--next" type="button" aria-label="Next image">→</button>
+        </div>
+
+        <div class="deck-strip" aria-label="Image thumbnails">
+          ${thumbs}
+        </div>
+      </div>
     </section>`;
 }
 
@@ -71,15 +84,58 @@ const io = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
+function setDeckImage(deck, nextIndex) {
+  const slides = JSON.parse(decodeURIComponent(deck.dataset.slides));
+  const total = slides.length;
+  const index = ((nextIndex % total) + total) % total;
+  const slide = slides[index];
+
+  deck.dataset.current = String(index);
+  const fig = deck.querySelector('.deck-photo');
+  const img = deck.querySelector('.deck-main-img');
+  const caption = deck.querySelector('.deck-caption__title');
+  const counter = deck.querySelector('.deck-counter b');
+
+  fig.classList.add('is-changing');
+  window.setTimeout(() => {
+    img.src = slide.src;
+    img.alt = slide.caption || '';
+    fig.dataset.src = slide.src;
+    fig.dataset.caption = slide.caption || '';
+    caption.textContent = slide.caption || '';
+    counter.textContent = String(index + 1).padStart(2, '0');
+    deck.querySelectorAll('.deck-thumb').forEach((button, i) => {
+      button.classList.toggle('is-active', i === index);
+    });
+    fig.classList.remove('is-changing');
+  }, 120);
+}
+
+document.querySelectorAll('.photo-deck').forEach((deck) => {
+  deck.dataset.current = '0';
+  deck.querySelector('.deck-nav--prev').addEventListener('click', () => {
+    setDeckImage(deck, Number(deck.dataset.current || 0) - 1);
+  });
+  deck.querySelector('.deck-nav--next').addEventListener('click', () => {
+    setDeckImage(deck, Number(deck.dataset.current || 0) + 1);
+  });
+  deck.querySelectorAll('.deck-thumb').forEach((button) => {
+    button.addEventListener('click', () => {
+      setDeckImage(deck, Number(button.dataset.index));
+    });
+  });
+});
+
 const lightbox = byId('lightbox');
 const lightboxImg = byId('lightbox-img');
 const lightboxCaption = byId('lightbox-caption');
 
 document.addEventListener('click', (e) => {
-  const fig = e.target.closest('.photo');
+  const fig = e.target.closest('.deck-photo');
   if (!fig) return;
+  if (e.target.closest('button')) return;
   lightboxImg.src = fig.dataset.src;
-  lightboxCaption.textContent = fig.dataset.caption;
+  lightboxCaption.textContent = fig.dataset.caption || '';
   lightbox.classList.add('is-open');
   lightbox.setAttribute('aria-hidden', 'false');
 });
@@ -96,4 +152,8 @@ lightbox.addEventListener('click', (e) => {
 });
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeLightbox();
+  if (!document.activeElement.closest?.('.photo-deck')) return;
+  const deck = document.activeElement.closest('.photo-deck');
+  if (e.key === 'ArrowLeft') setDeckImage(deck, Number(deck.dataset.current || 0) - 1);
+  if (e.key === 'ArrowRight') setDeckImage(deck, Number(deck.dataset.current || 0) + 1);
 });

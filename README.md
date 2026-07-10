@@ -39,3 +39,7 @@ assets/photos/*.webp
 - 城市低语 / The City Speaks Softly
 - 空椅之间 / Between Empty Chairs
 - 草木生灵 / Plants and Living Things
+
+
+## Image titles
+每张图片的小标题写在 `site-data.js` 里的 `caption` 字段中。修改后刷新网站即可生效。

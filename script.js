@@ -1,190 +1,132 @@
-/*
-  BryceVision static photobook site
-  Replace the empty image URL strings below with your Cloudflare R2 / image CDN URLs.
-  Example: url: "https://images.yourdomain.com/cikezaichang/old-places/01.webp"
-*/
-
 const siteData = {
+  // Replace this with your Cloudflare R2 / image CDN URL.
   heroImage: "",
   chapters: [
     {
-      number: "Ⅰ",
+      no: "Ⅰ",
       title: "旧处微光",
-      english: "Light in Old Places",
-      anchor: "old-places",
-      places: "Nanjing / Hangzhou / Shanghai",
-      text: "有些地方并不真正沉默。墙面、香火、屋檐、石阶，都在替时间说话。",
-      feature: { url: "", caption: "Temple / old street / quiet light" },
-      images: [
-        { url: "", caption: "stone steps" },
-        { url: "", caption: "incense" },
-        { url: "", caption: "old wall" }
-      ],
-      colors: ["#1d3557", "#c49a6c", "#e7dcc7"]
+      en: "Light in Old Places",
+      places: "Nanjing · Hangzhou · Shanghai",
+      cn: "有些地方并不真正沉默。墙面、香火、屋檐、石阶，都在替时间说话。",
+      enText: "Some places do not remain silent. Walls, incense, roofs and stone steps carry the quiet weight of time.",
+      feature: { url: "", caption: "Temple / Old street / Trace of time" },
+      thumbs: ["", "", ""]
     },
     {
-      number: "Ⅱ",
+      no: "Ⅱ",
       title: "人间片刻",
-      english: "Human Moments",
-      anchor: "human-moments",
-      places: "Shanghai / Hong Kong / Nanjing",
-      text: "人只是经过，但片刻会留下来。",
-      feature: { url: "", caption: "street / passerby / daily life" },
-      images: [
-        { url: "", caption: "passerby" },
-        { url: "", caption: "small shop" },
-        { url: "", caption: "breakfast" }
-      ],
-      colors: ["#4b3621", "#d8a15d", "#e6c9ad"]
+      en: "Human Moments",
+      places: "Street · Market · Temple",
+      cn: "人只是经过，但片刻会留下来。一个背影、一盏灯、一段停顿，都让地方重新有了温度。",
+      enText: "People pass by, but certain moments remain. A back, a light, a pause — enough to warm a place.",
+      feature: { url: "", caption: "Human trace / Ordinary gestures" },
+      thumbs: ["", "", ""]
     },
     {
-      number: "Ⅲ",
+      no: "Ⅲ",
       title: "城市低语",
-      english: "The City Speaks Softly",
-      anchor: "city-whispers",
-      places: "Shanghai / Hong Kong / Hangzhou",
-      text: "城市从不停止，只是偶尔放低声音。",
-      feature: { url: "", caption: "rain / night / reflection" },
-      images: [
-        { url: "", caption: "rain" },
-        { url: "", caption: "window" },
-        { url: "", caption: "streetlight" }
-      ],
-      colors: ["#061c67", "#697b8f", "#c1b6a3"]
+      en: "The City Speaks Softly",
+      places: "Shanghai · Hong Kong · Nanjing",
+      cn: "城市从不停止，只是偶尔放低声音。雨、玻璃、街角和人群之间，有短暂的安静。",
+      enText: "The city never stops. Sometimes, it simply lowers its voice between rain, glass, corners and crowds.",
+      feature: { url: "", caption: "Urban breath / Rain / Night" },
+      thumbs: ["", "", ""]
     },
     {
-      number: "Ⅳ",
+      no: "Ⅳ",
       title: "山河远行",
-      english: "Distant Landscapes",
-      anchor: "distant-landscapes",
-      places: "American West / Arizona / mountains",
-      text: "远方不是目的地，是人和世界之间忽然拉开的距离。",
-      feature: { url: "", caption: "desert / road / horizon" },
-      images: [
-        { url: "", caption: "desert" },
-        { url: "", caption: "highway" },
-        { url: "", caption: "sky" }
-      ],
-      colors: ["#865f3d", "#d4a373", "#f1d6b8"]
+      en: "Distant Landscapes",
+      places: "American West · Arizona · Road",
+      cn: "远方不是目的地，是人和世界之间忽然拉开的距离。天空、公路和荒野，让观看变得缓慢。",
+      enText: "Distance is not a destination. It is the space that opens between the self and the world.",
+      feature: { url: "", caption: "Desert / Highway / Horizon" },
+      thumbs: ["", "", ""]
     },
     {
-      number: "Ⅴ",
+      no: "Ⅴ",
       title: "无人在场",
-      english: "No One Was There",
-      anchor: "absence",
-      places: "empty streets / rooms / wilderness",
-      text: "没有人在画面里，但人的痕迹仍然存在。",
-      feature: { url: "", caption: "absence / trace / silence" },
-      images: [
-        { url: "", caption: "empty room" },
-        { url: "", caption: "road" },
-        { url: "", caption: "after people" }
-      ],
-      colors: ["#11110f", "#6f6a60", "#d4cec0"]
+      en: "No One Was There",
+      places: "Empty street · Room · Afterimage",
+      cn: "没有人在画面里，但人的痕迹仍然存在。空处不是缺失，而是一种更安静的在场。",
+      enText: "No one appears in the frame, yet traces of people remain. Absence becomes another form of presence.",
+      feature: { url: "", caption: "Absence / Silence / Afterimage" },
+      thumbs: ["", "", ""]
     }
   ]
 };
 
-function romanToIndex(roman) {
-  return ["Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ"].indexOf(roman) + 1;
+function imageOrFallback(url, alt, className = "") {
+  if (url && url.trim()) {
+    return `<img class="${className}" src="${url}" alt="${alt}" loading="lazy">`;
+  }
+  return `<div class="image-fallback ${className}"><span>IMAGE URL<br>script.js</span></div>`;
 }
 
-function photoMarkup(photo, className, colors = [], index = 0) {
-  const safeCaption = photo.caption || "photograph";
-  if (photo.url && photo.url.trim()) {
-    return `<figure class="${className}" data-caption="${safeCaption}"><img src="${photo.url}" alt="${safeCaption}" loading="lazy"></figure>`;
-  }
-  const color = colors[index % colors.length] || "#c8ba9b";
-  if (className.includes("feature-photo")) {
-    return `<figure class="${className} empty" data-caption="${safeCaption}" style="--photo-a:${colors[0] || '#061c67'};--photo-b:${colors[1] || '#e9b89d'};"></figure>`;
-  }
-  return `<figure class="${className} empty" style="--tile-color:${color};"><span>${safeCaption}</span></figure>`;
-}
-
-function initHero() {
-  const hero = document.getElementById("hero-photo");
+function renderHero() {
+  const wrap = document.getElementById("heroImageWrap");
+  const fallback = wrap.querySelector(".hero-fallback");
   if (siteData.heroImage && siteData.heroImage.trim()) {
-    hero.style.backgroundImage = `linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.18)), url('${siteData.heroImage}')`;
-    hero.classList.add("has-image");
+    fallback.outerHTML = `<img src="${siteData.heroImage}" alt="BryceVision cover image" loading="eager">`;
   }
 }
 
-function renderChapterIndex() {
-  const list = document.getElementById("chapter-list");
-  list.innerHTML = siteData.chapters.map(chapter => `
-    <a class="chapter-link" href="#${chapter.anchor}">
-      <span class="num">${chapter.number}</span>
-      <span class="title">${chapter.title}</span>
-      <span class="en">${chapter.english}</span>
-      <span class="arrow-right">→</span>
+function renderIndex() {
+  const mount = document.getElementById("chapterIndex");
+  mount.innerHTML = siteData.chapters.map((c, i) => `
+    <a class="index-row reveal" href="#chapter-${i + 1}">
+      <span class="index-no">${c.no}</span>
+      <span class="index-title">${c.title}</span>
+      <span class="index-en">${c.en}</span>
+      <span class="index-place">${c.places}</span>
     </a>
   `).join("");
 }
 
 function renderChapters() {
-  const target = document.getElementById("chapter-sections");
-  target.innerHTML = siteData.chapters.map((chapter, i) => `
-    <section class="chapter-section page-section" id="${chapter.anchor}">
-      <div class="chapter-copy reveal">
+  const mount = document.getElementById("chapterMount");
+  mount.innerHTML = siteData.chapters.map((c, i) => `
+    <article class="chapter reveal" id="chapter-${i + 1}">
+      <aside class="chapter-side">
         <div>
-          <span class="chapter-number">CHAPTER ${chapter.number}</span>
-          <h2 class="chapter-title">${chapter.title}</h2>
-          <p class="chapter-en">${chapter.english}</p>
-          <p class="chapter-text">${chapter.text}</p>
+          <p class="chapter-no">CHAPTER ${c.no}</p>
+          <p>${c.places}</p>
         </div>
-        <div class="chapter-meta">
-          <span>${chapter.places}</span>
-          <span>BryceVision / 此刻在场 / ${String(i + 1).padStart(2, "0")}</span>
+        <div class="chapter-title">
+          <h2>${c.title}</h2>
+          <p>${c.en}</p>
+        </div>
+      </aside>
+
+      <figure class="chapter-image">
+        ${imageOrFallback(c.feature.url, c.title)}
+        <figcaption>
+          <span>${c.feature.caption}</span>
+          <span>${String(i + 1).padStart(2, "0")} / 05</span>
+        </figcaption>
+      </figure>
+
+      <div class="chapter-copy">
+        <p class="cn">${c.cn}</p>
+        <p class="en">${c.enText}</p>
+        <div class="thumb-strip">
+          ${c.thumbs.map((url, t) => `<div class="thumb">${imageOrFallback(url, `${c.title} thumbnail ${t + 1}`)}</div>`).join("")}
         </div>
       </div>
-      <div class="chapter-visual reveal">
-        ${photoMarkup(chapter.feature, "feature-photo", chapter.colors)}
-        <div class="photo-row">
-          ${chapter.images.map((img, idx) => photoMarkup(img, "photo-tile", chapter.colors, idx)).join("")}
-        </div>
-      </div>
-    </section>
+    </article>
   `).join("");
 }
 
-function renderArchive() {
-  const sheet = document.getElementById("contact-sheet");
-  const allPhotos = siteData.chapters.flatMap(ch => [ch.feature, ...ch.images]);
-  sheet.innerHTML = allPhotos.map((photo, i) => {
-    if (photo.url && photo.url.trim()) {
-      return `<figure class="contact-frame" data-id="BV-${String(i + 1).padStart(3, "0")}"><img src="${photo.url}" alt="${photo.caption || 'archive photo'}" loading="lazy"></figure>`;
-    }
-    return `<figure class="contact-frame empty" data-id="BV-${String(i + 1).padStart(3, "0")}"></figure>`;
-  }).join("");
-}
-
 function revealOnScroll() {
-  const items = document.querySelectorAll(".reveal, .section-heading, .board-card, .chapter-link");
-  const observer = new IntersectionObserver((entries) => {
+  const items = document.querySelectorAll(".reveal");
+  const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-        observer.unobserve(entry.target);
-      }
+      if (entry.isIntersecting) entry.target.classList.add("is-visible");
     });
-  }, { threshold: 0.12 });
-  items.forEach(item => {
-    item.classList.add("reveal");
-    observer.observe(item);
-  });
+  }, { threshold: 0.15 });
+  items.forEach(item => io.observe(item));
 }
 
-function backTop() {
-  const btn = document.getElementById("backTop");
-  window.addEventListener("scroll", () => {
-    btn.classList.toggle("show", window.scrollY > 900);
-  });
-  btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
-}
-
-initHero();
-renderChapterIndex();
+renderHero();
+renderIndex();
 renderChapters();
-renderArchive();
 revealOnScroll();
-backTop();

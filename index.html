@@ -4,25 +4,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BryceVision — 此刻在场</title>
-  <meta name="description" content="BryceVision: a personal visual archive by Bryce. 此刻在场 — Fragments of Place, Memory and Light." />
-  <meta name="theme-color" content="#f2eee4" />
-  <meta property="og:title" content="BryceVision — 此刻在场" />
-  <meta property="og:description" content="A personal visual archive of places, people, silence and light." />
-  <meta property="og:type" content="website" />
-  <link rel="stylesheet" href="./style.css" />
+  <meta name="description" content="BryceVision — 此刻在场，一本关于地点、时间、人和缺席的线上摄影集。" />
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
   <div class="grain" aria-hidden="true"></div>
-  <div class="cursor-dot" aria-hidden="true"></div>
-
-  <header class="site-header" aria-label="Site header">
-    <a href="#top" class="brand" aria-label="BryceVision home">
-      <span>Bryce</span><span>Vision</span>
-    </a>
-
-    <nav class="nav" aria-label="Primary navigation">
-      <a href="#photobook">Photobook</a>
+  <header class="site-header">
+    <a href="#top" class="brand" aria-label="BryceVision home">BryceVision</a>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="#collection">Collection</a>
       <a href="#chapters">Chapters</a>
       <a href="#archive">Archive</a>
       <a href="#about">About</a>
@@ -30,104 +20,110 @@
   </header>
 
   <main id="top">
-    <section class="hero section" aria-label="BryceVision cover">
-      <div class="hero-media" id="heroMedia" aria-hidden="true"></div>
-
-      <div class="hero-copy">
-        <p class="eyebrow reveal">A VISUAL ARCHIVE BY BRYCE</p>
-        <h1 class="hero-title reveal">
-          <span>Bryce</span>
-          <span>Vision</span>
-        </h1>
-        <div class="hero-meta reveal">
-          <span>Photography</span>
-          <span>Memory</span>
-          <span>Film Notes</span>
-          <span>2026</span>
-        </div>
+    <section class="hero page-section" data-theme="paper">
+      <div class="hero-meta">
+        <span>001</span>
+        <span>Online Photobook</span>
+        <span>2026</span>
       </div>
 
-      <div class="hero-bottom reveal">
-        <p>
-          A personal archive of places, people, silence and light.
-        </p>
-        <a class="scroll-link" href="#photobook" aria-label="Scroll to photobook">Scroll</a>
+      <div class="hero-stage">
+        <div class="cover-plate">
+          <div class="cover-photo" id="hero-photo" role="img" aria-label="Hero photograph placeholder"></div>
+          <div class="cover-label label-top">Fragments of Place, Memory and Light</div>
+          <h1 class="hero-title">此刻在场</h1>
+          <p class="hero-subtitle">A visual archive by Bryce Zhang</p>
+          <div class="cover-label label-bottom">Nanjing / Hangzhou / Shanghai / Hong Kong / American West</div>
+        </div>
+
+        <aside class="paper-note note-left">
+          <span class="note-number">I</span>
+          <strong>旧处微光</strong>
+          <small>Light in Old Places</small>
+        </aside>
+        <aside class="paper-note note-right">
+          <span class="note-number">V</span>
+          <strong>无人在场</strong>
+          <small>No One Was There</small>
+        </aside>
+      </div>
+
+      <div class="hero-footer">
+        <span>Scroll to open</span>
+        <span class="arrow">↓</span>
       </div>
     </section>
 
-    <section id="photobook" class="intro section">
-      <div class="intro-number reveal">00</div>
+    <section id="collection" class="intro-spread page-section">
+      <div class="spread-index">
+        <p class="eyebrow">Collection</p>
+        <h2>BryceVision<br><span>presents</span></h2>
+        <p class="lead-cn">《此刻在场》不是一份旅行相册，而是一组关于观看、停留和记忆的视觉笔记。</p>
+        <p class="lead-en">This is not a map of places. It is a record of moments that asked to be noticed.</p>
+      </div>
 
-      <div class="intro-main">
-        <p class="eyebrow reveal">FEATURED PHOTOBOOK</p>
-        <h2 class="cn-title reveal">此刻在场</h2>
-        <p class="en-title reveal">Fragments of Place, Memory and Light</p>
-
-        <div class="intro-grid">
-          <p class="intro-text reveal">
-            我在这些地方停下来，看见了时间、人、城市和远方。
-            照片不是为了证明我到过哪里，而是为了保留那些即将消失的瞬间。
-          </p>
-          <p class="intro-text muted reveal">
-            This is not a travel album. It is a visual record of being present:
-            old places, human traces, quiet cities, distant landscapes and the absence that remains.
-          </p>
+      <div class="spread-board" aria-label="photobook preview board">
+        <div class="board-tabs">
+          <span>INDEX</span><span>WORK</span><span>NOTES</span><span>CONTACT</span>
+        </div>
+        <div class="board-grid">
+          <article class="board-card main-card">
+            <span class="card-kicker">Photobook / 01</span>
+            <h3>此刻在场</h3>
+            <p>时间、人的痕迹、城市的低语与远方的空白。</p>
+          </article>
+          <article class="board-card small-card"><span>南京</span><b>Nanjing</b></article>
+          <article class="board-card small-card"><span>杭州</span><b>Hangzhou</b></article>
+          <article class="board-card small-card"><span>上海</span><b>Shanghai</b></article>
+          <article class="board-card small-card"><span>香港</span><b>Hong Kong</b></article>
+          <article class="board-card small-card"><span>西部</span><b>American West</b></article>
         </div>
       </div>
     </section>
 
-    <section id="chapters" class="chapter-index section" aria-label="Chapter index">
-      <div class="section-label reveal">
-        <span>INDEX</span>
-        <span>五个章节</span>
+    <section id="chapters" class="chapter-index page-section">
+      <div class="section-heading">
+        <span>Contents</span>
+        <h2>Five Chapters</h2>
       </div>
+      <div class="chapter-list" id="chapter-list"></div>
+    </section>
 
-      <div id="chapterIndex" class="chapter-list">
-        <!-- Generated by script.js -->
+    <div id="chapter-sections"></div>
+
+    <section id="archive" class="archive page-section">
+      <div class="section-heading">
+        <span>Archive</span>
+        <h2>Contact Sheets & Notes</h2>
+      </div>
+      <div class="archive-layout">
+        <div class="archive-sidebar">
+          <p>照片可以继续按主题进入章节，也可以保留城市、日期、胶卷型号作为索引信息。</p>
+          <ul>
+            <li>Place as metadata</li>
+            <li>Theme as structure</li>
+            <li>Text as memory</li>
+          </ul>
+        </div>
+        <div class="contact-sheet" id="contact-sheet"></div>
       </div>
     </section>
 
-    <section id="archive" class="archive section" aria-label="Photobook chapters">
-      <div id="chapterSections">
-        <!-- Generated by script.js -->
+    <section id="about" class="about page-section">
+      <div class="about-card">
+        <p class="eyebrow">About the project</p>
+        <h2>BryceVision</h2>
+        <p>一个以摄影、影像和文字组成的个人视觉档案。第一本线上摄影集《此刻在场》收集南京、杭州、上海、香港与美国西部的风景、寺庙和人文片刻。</p>
+        <p>它更像一本可以滚动的摄影书：留白、章节、文字、照片和观看的节奏共同构成作品。</p>
       </div>
-    </section>
-
-    <section id="about" class="about section">
-      <div class="about-rule reveal"></div>
-      <div class="about-layout">
-        <div>
-          <p class="eyebrow reveal">ABOUT BRYCEVISION</p>
-          <h2 class="about-title reveal">Photography,<br />as a way of noticing.</h2>
-        </div>
-
-        <div class="about-copy reveal">
-          <p>
-            BryceVision 是一个个人视觉档案，用来存放摄影作品、短片想法和旅行中的观察。
-            这里的照片来自南京、杭州、上海、美国西部、香港，也来自一些更细小的时刻：
-            一束光、一个背影、一段路、一处空场。
-          </p>
-          <p>
-            网站目前以《此刻在场》作为第一本线上摄影集。图片通过外链加载，
-            适合使用 Cloudflare R2、Cloudflare Images 或其他稳定图床。
-          </p>
-        </div>
+      <div class="about-stamp">
+        <span>BRYCE</span>
+        <span>VISION</span>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <span>BryceVision</span>
-    <span>© <span id="year"></span></span>
-    <a href="#top">Back to top</a>
-  </footer>
-
-  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Image preview">
-    <button class="lightbox-close" id="lightboxClose" aria-label="Close image preview">×</button>
-    <img id="lightboxImage" alt="" />
-    <p id="lightboxCaption"></p>
-  </div>
-
-  <script src="./script.js"></script>
+  <button class="back-top" id="backTop" aria-label="Back to top">↑</button>
+  <script src="script.js"></script>
 </body>
 </html>

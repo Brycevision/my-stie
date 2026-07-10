@@ -1,68 +1,53 @@
-# BryceVision — Static Photobook Website
+# BryceVision — 此刻在场 V2
 
-这是一个纯静态摄影集网站版本，可以直接上传 GitHub，并用 Cloudflare Pages 部署。
+这是一个纯静态摄影集网站，不需要 Astro / React / 构建工具。
 
 ## 文件
 
-- `index.html`：网页结构
-- `style.css`：视觉设计、排版、响应式样式
-- `script.js`：章节内容、图片链接、滚动动画、图片预览
+- `index.html` 网站结构
+- `style.css` 视觉样式
+- `script.js` 内容与图片 URL 配置
+- `README.md` 使用说明
 
-## 如何替换图片
+## 部署到 GitHub + Cloudflare Pages
 
-打开 `script.js`，找到：
+1. 解压 zip。
+2. 把 `index.html`、`style.css`、`script.js`、`README.md` 上传到 GitHub 仓库根目录。
+3. Cloudflare Pages 连接该 GitHub 仓库。
+4. 设置：
+   - Framework preset: `None`
+   - Build command: 留空
+   - Output directory: `/` 或留空
+5. Deploy。
 
-```js
-const SITE = {
-  heroImage: "",
-};
-```
+## 替换图片
 
-把首页封面图改成：
-
-```js
-heroImage: "https://images.yourdomain.com/brycevision/hero.webp",
-```
-
-每个 chapter 里也有：
+打开 `script.js`，把空字符串改成你的图片链接：
 
 ```js
-cover: "",
-photos: [
-  {
-    url: "",
-    caption: "...",
-    shape: "landscape"
-  }
-]
+heroImage: "https://images.yourdomain.com/brycevision/hero.webp"
 ```
 
-把 `url: ""` 改成你的图片链接即可。
+每一章里也有图片：
 
-## 推荐图片规格
+```js
+feature: { url: "https://images.yourdomain.com/cikezaichang/old-places/01.webp", caption: "Lingyin Temple" }
+```
 
-- WebP / AVIF
-- 长边 1800–2500px
-- 单张最好 300KB–900KB
-- 横图用 `shape: "landscape"`
-- 竖图用 `shape: "portrait"`
-- 方图用 `shape: "square"`
+建议图片格式：
 
-## Cloudflare Pages 部署
+- WebP
+- 长边 2000–2600px
+- 单张 300KB–900KB
+- 使用 Cloudflare R2 或其他 CDN 图片链接
 
-1. 新建 GitHub repository
-2. 上传这三个文件：`index.html`, `style.css`, `script.js`
-3. Cloudflare Pages → Create a project
-4. 连接 GitHub repository
-5. Framework preset 选择：`None`
-6. Build command 留空
-7. Output directory 填：`/` 或留空
-8. Deploy
+## 设计思路
 
-## 图片存储建议
+V2 改成更清晰的“线上摄影书 / 个人视觉档案”结构：
 
-推荐使用 Cloudflare R2：
+- 首页像摄影书封面
+- 第二屏像 archive board / folder index
+- chapters 用统一的书页式排版
+- 不再使用杂乱相册式排布
+- 图片链接集中在 `script.js` 里管理
 
-- 网站域名：`brycevision.com`
-- 图片域名：`images.brycevision.com`
-- 图片路径示例：`https://images.brycevision.com/cikezaichang/chapter-01/01.webp`

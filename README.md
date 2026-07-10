@@ -1,50 +1,41 @@
-# BryceVision — Static Photobook Website V3
+# BryceVision — 此刻在场
 
-This is a pure static website. No build tools are required.
+这是一个纯静态摄影集网站版本，可直接部署到 GitHub + Cloudflare Pages。
 
-## Files
+## 文件结构
 
-- `index.html`
-- `style.css`
-- `script.js`
-- `README.md`
+```text
+index.html
+style.css
+script.js
+site-data.js
+assets/photos/*.webp
+```
 
-## Deploy on GitHub + Cloudflare Pages
+## Cloudflare Pages 部署
 
-1. Upload all files to the root of your GitHub repository.
-2. In Cloudflare Pages:
+1. 把本文件夹里的所有内容上传到 GitHub 仓库根目录。
+2. 在 Cloudflare Pages 里连接该 GitHub 仓库。
+3. 构建设置：
    - Framework preset: `None`
-   - Build command: leave blank
-   - Output directory: `/` or leave blank
-3. Deploy.
+   - Build command: 留空
+   - Output directory: `/` 或留空
+4. 部署后即可访问。
 
-## Replace images
+## 替换为正式高清图片
 
-Open `script.js` and replace empty image URLs:
+当前 `assets/photos/*.webp` 是从你上传的 PDF 里导出的网页预览图。正式版建议把原图压缩成 WebP 后放到 Cloudflare R2，再在 `site-data.js` 里把本地路径替换成图片 URL。
 
-```js
-heroImage: "https://images.yourdomain.com/brycevision/hero.webp"
-```
-
-For each chapter:
+例如：
 
 ```js
-feature: { url: "https://images.yourdomain.com/chapter-01/cover.webp" }
-thumbs: [
-  "https://images.yourdomain.com/chapter-01/01.webp",
-  "https://images.yourdomain.com/chapter-01/02.webp",
-  "https://images.yourdomain.com/chapter-01/03.webp"
-]
+"src": "https://images.yourdomain.com/cikezaichang/eaves/01.webp"
 ```
 
-## Design logic
+## 章节结构
 
-V3 uses a stricter visual system:
-
-- one paper background color
-- one ink color
-- one red accent
-- two font systems only: serif for titles, sans-serif for interface/body
-- fixed grid and chapter rhythm
-- no random collage colors
-- smaller typography than previous versions
+- 檐下微光 / Under the Eaves
+- 人间片刻 / Human Moments
+- 城市低语 / The City Speaks Softly
+- 空椅之间 / Between Empty Chairs
+- 草木生灵 / Plants and Living Things

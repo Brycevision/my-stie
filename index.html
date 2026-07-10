@@ -3,112 +3,94 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="BryceVision — 此刻在场，一本关于地点、时间、人与光的线上摄影集。" />
   <title>BryceVision — 此刻在场</title>
+  <meta name="description" content="BryceVision: 此刻在场 / Fragments of Place, Memory and Light. A personal visual archive by Bryce Liu." />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="grain" aria-hidden="true"></div>
-
-  <header class="site-header">
+  <header class="topbar" data-ui="topbar">
     <a class="brand" href="#top" aria-label="Back to top">BryceVision</a>
-    <nav class="nav" aria-label="Site navigation">
-      <a href="#index">Index</a>
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="#collection">Collection</a>
       <a href="#chapters">Chapters</a>
-      <a href="#notes">Notes</a>
-      <a href="#contact">Contact</a>
+      <a href="#about">About</a>
     </nav>
   </header>
 
   <main id="top">
-    <section class="hero section" data-section="cover">
-      <div class="hero-meta">
-        <span>PHOTOBOOK / 001</span>
-        <span>BRYCE ZHANG</span>
-        <span>2026 ARCHIVE</span>
-      </div>
-
-      <div class="hero-title">
-        <p class="eyebrow">A Visual Archive</p>
-        <h1>此刻在场</h1>
-        <p class="subtitle">Fragments of Place, Memory and Light</p>
-      </div>
-
-      <figure class="cover-object" id="heroImageWrap">
-        <div class="image-fallback hero-fallback">
-          <span>Replace heroImage URL<br>in script.js</span>
+    <section class="hero section" id="collection">
+      <div class="hero__left">
+        <p class="eyebrow">Personal Photography Archive</p>
+        <h1>BryceVision</h1>
+        <div class="project-title">
+          <span>此刻在场</span>
+          <small>Fragments of Place,<br>Memory and Light</small>
         </div>
-        <figcaption>
-          <span>Cover Plate</span>
-          <span>01 / 05</span>
-        </figcaption>
-      </figure>
-
-      <div class="hero-statement">
-        <p>我在这些地方停下来，看见了时间、人、城市和远方。</p>
-        <p>Not a gallery of places, but a record of seeing.</p>
-      </div>
-    </section>
-
-    <section class="intro section">
-      <div class="intro-left">
-        <p class="small-title">PROJECT STATEMENT</p>
-        <p>
-          《此刻在场》不是按照城市整理的旅行相册。南京、杭州、上海、香港和美国西部，只是影像发生的地点；真正被整理的是光、时间、人的痕迹，以及无人之处留下的安静。
+        <p class="intro-copy">
+          我拍下的不是某个地方本身，<br>
+          而是我在那个时刻停下来的理由。<br><br>
+          寺庙、街道、湖边、空椅、花与动物，
+          它们都曾在某一秒里真实地出现。摄影，是我确认自己曾经在场的方式。
         </p>
       </div>
-      <div class="intro-right">
-        <p>
-          This site is designed as an online photobook: controlled typography, quiet colors, fixed rhythm, and images arranged like pages rather than a grid.
-        </p>
+
+      <div class="hero__plate" aria-label="Photobook cover preview">
+        <div class="archive-card archive-card--top">
+          <span>ARCHIVE NO. 01</span>
+          <strong>此刻在场</strong>
+          <em>2023.06 — 2025.06</em>
+        </div>
+        <div class="cover-image-wrap">
+          <img id="hero-cover" alt="BryceVision cover image" />
+        </div>
+        <div class="cover-note">
+          <span>Five chapters</span>
+          <span>Places / People / Silence / Light</span>
+        </div>
       </div>
     </section>
 
-    <section id="index" class="index section">
-      <div class="section-label">INDEX</div>
-      <div class="index-list" id="chapterIndex"></div>
+    <section class="index section" id="chapters">
+      <div class="section-label">
+        <span>Index</span>
+        <span>Photobook chapters</span>
+      </div>
+      <div id="chapter-index" class="chapter-index"></div>
     </section>
 
-    <section id="chapters" class="chapters section">
-      <div class="section-label">CHAPTERS</div>
-      <div id="chapterMount"></div>
-    </section>
+    <section id="chapter-sections" class="chapter-sections"></section>
 
-    <section id="notes" class="archive-board section">
-      <div class="section-label">FIELD NOTES</div>
-      <div class="board">
-        <article class="note note-main">
-          <p class="note-kicker">PHOTOGRAPHIC METHOD</p>
-          <h2>此刻，不只是画面</h2>
-          <p>摄影不是把一个地方变成纪念品，而是在某一刻承认自己真的站在那里。</p>
-        </article>
-        <article class="note slip">
-          <span>Camera</span>
-          <strong>Pentax SV</strong>
-          <p>Film / Street / Human Trace</p>
-        </article>
-        <article class="note slip">
-          <span>Places</span>
-          <strong>Nanjing · Hangzhou · Shanghai · Hong Kong · American West</strong>
-        </article>
-        <article class="note slip quote">
-          <p>“No one appears in the frame, yet traces of people remain.”</p>
-        </article>
+    <section class="about section" id="about">
+      <div class="about__title">
+        <p class="eyebrow">About the Archive</p>
+        <h2>不是地点分类，<br>而是观看方式。</h2>
+      </div>
+      <div class="about__body">
+        <p>
+          这组影像整理自 2023.06 至 2025.06 的个人摄影记录。它们来自不同城市、街道、寺庙、公园与日常空间，
+          但最终被放进同一本线上摄影集：<strong>《此刻在场》</strong>。
+        </p>
+        <p>
+          网站以五个主题展开：檐下微光、人间片刻、城市低语、空椅之间、草木生灵。
+          它们不是严格的地理目录，而是一种视觉归档方式：把时间、人、空间与微小生命放回同一个观看现场。
+        </p>
       </div>
     </section>
   </main>
 
-  <footer id="contact" class="footer section">
-    <div>
-      <p class="small-title">BryceVision</p>
-      <p>Photography, memory, and the act of seeing.</p>
-    </div>
-    <div class="footer-links">
-      <a href="mailto:your-email@example.com">Email</a>
-      <a href="#top">Back to top</a>
-    </div>
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox__close" aria-label="Close image">×</button>
+    <img id="lightbox-img" alt="Expanded photograph" />
+    <p id="lightbox-caption"></p>
+  </div>
+
+  <footer class="footer">
+    <span>BryceVision</span>
+    <span>此刻在场 / Fragments of Place, Memory and Light</span>
   </footer>
 
+  <script src="site-data.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
